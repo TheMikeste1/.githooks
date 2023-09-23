@@ -1,0 +1,24 @@
+#! /usr/bin/env bash
+
+if [ -z ${git_dir+x} ];
+then
+  exit 1
+fi;
+
+changed_files=$(git diff --name-only --diff-filter=d --staged | grep -Ei "^.+\.py$")
+read -ra changed_files -d "\n" <<< "$changed_files"
+changed_files=("${changed_files[@]/#/$git_dir}")
+
+if [ ${#changed_files[@]} -eq 0 ];
+then
+  # Do nothing if nothing to do
+  exit 0
+fi
+
+echo "# Running Python isort"
+python -m isort "${changed_files[@]}"
+
+echo "# Running Python Black"
+python -m black "${changed_files[@]}"
+
+git add "${changed_files[@]}"
