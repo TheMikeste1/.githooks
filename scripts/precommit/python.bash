@@ -5,7 +5,7 @@ then
   exit 1
 fi;
 
-changed_files=$(git diff --name-only --diff-filter=d --staged | grep -Ei "^.+\.py$")
+changed_files=$(git diff --name-only --diff-filter=d --staged | grep -Ei "^.+\.pyi?$")
 read -ra changed_files -d "\n" <<< "$changed_files"
 changed_files=("${changed_files[@]/#/$git_dir}")
 
@@ -16,9 +16,9 @@ then
 fi
 
 echo "# Running Python isort"
-python -m isort "${changed_files[@]}"
+python3 -m isort "${changed_files[@]}"
 
 echo "# Running Python Black"
-python -m black "${changed_files[@]}"
+python3 -m black "${changed_files[@]}"
 
 git add "${changed_files[@]}"
