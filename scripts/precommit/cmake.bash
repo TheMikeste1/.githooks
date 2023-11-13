@@ -18,9 +18,9 @@ fi
 # cmake-format
 # Format the staged files
 echo "Running cmake-format. . ."
-cmake-format -i "${changed_files[@]}"
+cmake-format -i "${changed_files[@]}" -c "$HOOKS_ROOT/config/precommit/cmake-format.yaml"
 git add "${changed_files[@]}"
 
 # cmake-lint
 echo "Running cmake-lint. . ."
-cmake-lint --suppress-decorations "${changed_files[@]}"
+cmake-lint --suppress-decorations "${changed_files[@]}" -c "$HOOKS_ROOT/config/precommit/cmake-format.yaml"

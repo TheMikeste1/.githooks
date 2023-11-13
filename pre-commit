@@ -1,21 +1,22 @@
 #! /usr/bin/env bash
 
-SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+HOOKS_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+export HOOKS_ROOT
 
 # Get the files that have changed
 git_dir=$(git rev-parse --show-toplevel)/
 export git_dir
 
 # C++ files
-"$SCRIPT_DIR"/scripts/precommit/cxx.bash || exit $?
+"$HOOKS_ROOT"/scripts/precommit/cxx.bash || exit $?
 
 # C# files
-"$SCRIPT_DIR"/scripts/precommit/csharp.bash || exit $?
+"$HOOKS_ROOT"/scripts/precommit/csharp.bash || exit $?
 
 # CMake files
-"$SCRIPT_DIR"/scripts/precommit/cmake.bash || exit $?
+"$HOOKS_ROOT"/scripts/precommit/cmake.bash || exit $?
 
 # Python files
-"$SCRIPT_DIR"/scripts/precommit/python.bash || exit $?
+"$HOOKS_ROOT"/scripts/precommit/python.bash || exit $?
 
 exit 0
