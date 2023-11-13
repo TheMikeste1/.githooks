@@ -16,9 +16,12 @@ then
 fi
 
 echo "# Running Python isort"
-python3 -m isort "${changed_files[@]}"
+python3 -m isort --atomic "${changed_files[@]}"
 
 echo "# Running Python Black"
 python3 -m black "${changed_files[@]}"
+
+echo "# Running Python Prospector"
+python3 -m prospector "${changed_files[@]}"
 
 git add "${changed_files[@]}"
