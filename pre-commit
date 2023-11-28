@@ -1,7 +1,26 @@
 #! /usr/bin/env bash
 
-HOOKS_ROOT=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+HOOKS_ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
+readonly HOOKS_ROOT
 export HOOKS_ROOT
+
+MERGE_HASH=$(git rev-parse -q --verify MERGE_HEAD 2>/dev/null)
+readonly MERGE_HASH
+if [ -n "$MERGE_HASH" ]; then
+  # Merge commit
+  echo "Merge commit; skipping hooks"
+  exit 0
+fi
+
+REBASE_HASH=$(git rev-parse -q --verify REBASE_HEAD 2>/dev/null)
+readonly REBASE_HASH
+if [ -n "$REBASE_HASH" ]; then
+  # Rebase commit
+  echo "Rebase commit; skipping hooks"
+  exit 0
+fi
+
+# Normal commit
 
 # Get the files that have changed
 git_dir=$(git rev-parse --show-toplevel)/
