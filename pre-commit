@@ -14,7 +14,9 @@ fi
 
 REBASE_HASH=$(git rev-parse -q --verify REBASE_HEAD 2>/dev/null)
 readonly REBASE_HASH
-if [ -n "$REBASE_HASH" ]; then
+IS_AMEND=$(ps -ocommand= -p $PPID | grep -e '--amend');
+readonly IS_AMEND
+if [ -n "$REBASE_HASH" ] && [ -z "$IS_AMEND" ]; then
   # Rebase commit
   echo "Rebase commit; skipping hooks"
   exit 0
