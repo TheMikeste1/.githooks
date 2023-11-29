@@ -1,5 +1,11 @@
 #! /usr/bin/env bash
 
+REPO_ROOT="$(
+  cd "$(git rev-parse --show-toplevel)" >/dev/null 2>&1
+  pwd -P
+)"
+readonly REPO_ROOT
+
 HOOKS_ROOT=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)
 readonly HOOKS_ROOT
 export HOOKS_ROOT
@@ -12,11 +18,12 @@ if [ -n "$MERGE_HASH" ]; then
   exit 0
 fi
 
-REBASE_HASH=$(git rev-parse -q --verify REBASE_HEAD 2>/dev/null)
-readonly REBASE_HASH
-IS_AMEND=$(ps -ocommand= -p $PPID | grep -e '--amend');
+REBASE_APPLY_PATH="${REPO_ROOT}/.git/rebase-apply"
+REBASE_MERGE_PATH="${REPO_ROOT}/.git/rebase-merge"
+IS_AMEND=$(ps -ocommand= -p $PPID | grep -e '--amend')
 readonly IS_AMEND
-if [ -n "$REBASE_HASH" ] && [ -z "$IS_AMEND" ]; then
+
+if [ -e "${REBASE_APPLY_PATH}" ] || [ -e "${REBASE_MERGE_PATH}" ]; then
   # Rebase commit
   echo "Rebase commit; skipping hooks"
   exit 0
