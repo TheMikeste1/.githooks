@@ -19,4 +19,4 @@ rustfmt "${changed_files[@]}"
 git add "${changed_files[@]}"
 
 echo "Running clippy. . ."
-cargo clippy -- -D warnings
+cargo clippy -- -D warnings || exit 1
