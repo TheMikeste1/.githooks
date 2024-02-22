@@ -38,5 +38,10 @@ export git_dir
 find "$HOOKS_ROOT/scripts/precommit/" -maxdepth 1 -type f -print0 | while IFS= read -r -d $'\0' file; do
   $file || exit $?
 done
+
 return_code=$?  # We have to grab the return code from the loop
+if [ $return_code == 0 ]; then
+  echo "Success! Committing. . ."
+fi
+
 exit $return_code
