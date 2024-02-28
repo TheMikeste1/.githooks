@@ -15,7 +15,7 @@ fi
 
 # Format the staged files
 echo "Running rustfmt. . ."
-rustfmt "${changed_files[@]}"
+rustfmt --edition 2021 "${changed_files[@]}"
 git add "${changed_files[@]}"
 
 echo "Running clippy. . ."
