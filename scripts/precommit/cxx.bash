@@ -18,7 +18,7 @@ fi
 # clang-format
 # Format the staged files
 echo "Running clang-format. . ."
-clang-format -i "${changed_files[@]}"
+clang-format -style=file -i "${changed_files[@]}"
 git add "${changed_files[@]}"
 
 # cppcheck
