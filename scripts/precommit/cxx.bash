@@ -23,7 +23,8 @@ git add "${changed_files[@]}"
 
 # cppcheck
 echo "Running cppcheck. . ."
-if ! cppcheck --error-exitcode=1 --force --library=googletest "${changed_files[@]}";
+mkdir -p "${git_dir}/.cppcheck"
+if ! cppcheck "--cppcheck-build-dir=${git_dir}/.cppcheck" --error-exitcode=1 --inline-suppr --force --library=googletest "${changed_files[@]}";
 then
     echo "Unable to commit!"
     exit 1
