@@ -31,6 +31,9 @@ fi
 
 # Normal commit
 
+# Stash unstaged changes
+git stash -q --keep-index
+
 # Get the files that have changed
 git_dir=$(git rev-parse --show-toplevel)/
 export git_dir
@@ -44,4 +47,6 @@ if [ $return_code == 0 ]; then
   echo "Success! Committing. . ."
 fi
 
+# Unstash the unstaged changes
+git stash pop -q
 exit $return_code
