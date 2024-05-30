@@ -1,0 +1,10 @@
+---
+cxx:
+  parallel: false
+  commands:
+    clang-format:
+      glob: '*.{h,c}{pp,}'
+      run: clang-format -style=file --dry-run --Werror {staged_files} || (clang-format -style=file -i {staged_files} && false)
+    cppcheck:
+      glob: '*.{h,c}{pp,}'
+      run: "mkdir -p .cppcheck && cppcheck --cppcheck-build-dir=.cppcheck --error-exitcode=1 --inline-suppr --force --library=googletest {staged_files}"
