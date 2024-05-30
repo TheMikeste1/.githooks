@@ -1,0 +1,48 @@
+# EXAMPLE USAGE:
+#
+#   Refer for explanation to following link:
+#   https://github.com/evilmartians/lefthook/blob/master/docs/configuration.md
+#
+# pre-push:
+#   commands:
+#     packages-audit:
+#       tags: frontend security
+#       run: yarn audit
+#     gems-audit:
+#       tags: backend security
+#       run: bundle audit
+#
+---
+pre-commit:
+  parallel: true
+  commands:
+    shellcheck:
+      glob: "*.{bash,sh}"
+      run: shellcheck -x {staged_files}
+    shellharden:
+      glob: "*.{bash,sh}"
+      run: shellharden --check -- {staged_files}
+#     rubocop:
+#       tags: backend style
+#       glob: "*.rb"
+#       exclude: '(^|/)(application|routes)\.rb$'
+#       run: bundle exec rubocop --force-exclusion {all_files}
+#     govet:
+#       tags: backend style
+#       files: git ls-files -m
+#       glob: "*.go"
+#       run: go vet {files}
+#   scripts:
+#     "hello.js":
+#       runner: node
+#     "any.go":
+#       runner: go run
+autofix:
+  parallel: false
+  commands:
+    shellcheck:
+      glob: "*.{bash,sh}"
+      run: shellcheck -x -f diff {staged_files} | git apply
+    shellharden:
+      glob: "*.{bash,sh}"
+      run: shellharden --replace -- {staged_files} 

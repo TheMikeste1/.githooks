@@ -8,7 +8,7 @@ function get_issue_number() {
   issues=$(echo "$branch_name" | grep -oP "^$GIT_ISSUE_REGEX|[/-]$GIT_ISSUE_REGEX") # Get the issue name
   # Select the last one, removing the slash or dash if it exists
   # shellcheck disable=SC2086 # We want $issues to split
-  last_issue=$(echo $issues | awk '{print $NF}' | sed 's/^[\/-]//g')
+  last_issue=$(echo "$issues" | awk '{print $NF}' | sed 's/^[\/-]//g')
   echo "$last_issue"
 }
 

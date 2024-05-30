@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ -z ${git_dir+x} ];
+if [ "${git_dir+x}" = "" ];
 then
   exit 1
 fi;
