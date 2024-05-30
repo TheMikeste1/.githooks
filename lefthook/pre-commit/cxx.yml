@@ -1,6 +1,6 @@
 ---
 cxx:
-  parallel: false
+  parallel: true
   commands:
     clang-format:
       glob: '*.{h,c}{pp,}'

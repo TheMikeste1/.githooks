@@ -1,6 +1,7 @@
 ---
 extends:
   - ./lefthook/pre-commit/bash.yml
+  - ./lefthook/pre-commit/cmake.yml
   - ./lefthook/pre-commit/cxx.yml
 
 pre-commit:

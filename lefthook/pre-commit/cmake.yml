@@ -1,0 +1,10 @@
+---
+cmake:
+  parallel: false
+  commands:
+    cmake-format:
+      glob: '{CMakeLists.txt,*.cmake}'
+      run: cmake-format --check -c "~/.githooks/config/precommit/cmake-format.yaml" {staged_files} || (cmake-format -i -c "~/.githooks/config/precommit/cmake-format.yaml" {staged_files} && false)
+    cmake-lint:
+      glob: '{CMakeLists.txt,*.cmake}'
+      run: cmake-lint --suppress-decorations {staged_files} -c "~/.githooks/config/precommit/cmake-format.yaml"
