@@ -1,0 +1,5 @@
+---
+prepare-commit-msg:
+  commands:
+    add-jira-issue:
+      run: ~/.githooks/scripts/prepare-commit-msg/add_jira_issue.bash {0}

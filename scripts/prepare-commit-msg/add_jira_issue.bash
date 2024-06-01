@@ -5,6 +5,11 @@
 # Example: `Add SwiftLint -> `AWG-562 Add SwiftLint
 # Original source: https://github.com/aitemr/awesome-git-hooks/blob/master/prepare-commit-msg/prepare-commit-msg-jira
 
+if [ "$#" -lt 1 ]; then
+    echo "Illegal number of parameters"
+    exit 1
+fi
+
 if [[ "$BRANCHES_TO_SKIP" = "" ]]; then
     BRANCHES_TO_SKIP='develop test'
 fi
