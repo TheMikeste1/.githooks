@@ -7,4 +7,4 @@ cxx:
       run: clang-format -style=file --dry-run --Werror {staged_files} || (clang-format -style=file -i {staged_files} && false)
     cppcheck:
       glob: '*.{h,c}{pp,}'
-      run: "mkdir -p .cache/cppcheck && cppcheck --language=c++ --cppcheck-build-dir=.cache/cppcheck  --error-exitcode=1 --inline-suppr --force --library=googletest {staged_files}"
+      run: "mkdir -p .cache/cppcheck && cppcheck --clang --enable=warning,performance,portability,information --language=c++ --cppcheck-build-dir=.cache/cppcheck  --error-exitcode=1 --inline-suppr --force --library=googletest -j 8 {staged_files}"
