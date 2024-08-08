@@ -4,4 +4,4 @@ prepare-commit-msg:
     add-jira-issue:
       run: ~/.githooks/scripts/prepare-commit-msg/add_jira_issue.bash {0}
     detect-conflict-markers:
-      run: git diff --staged --check
+      run: git diff --staged --check > /dev/null
