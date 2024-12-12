@@ -4,7 +4,7 @@ cmake:
   commands:
     cmake-format:
       glob: '{CMakeLists.txt,*.cmake}'
-      run: cmake-format --check -c "~/.githooks/config/precommit/cmake-format.yaml" {staged_files} || (cmake-format -i -c "~/.githooks/config/precommit/cmake-format.yaml" {staged_files} && false)
+      run: bash -c "~/.githooks/scripts/pre-commit/cmake-format.sh {staged_files}"
     cmake-lint:
       glob: '{CMakeLists.txt,*.cmake}'
-      run: cmake-lint --suppress-decorations {staged_files} -c "~/.githooks/config/precommit/cmake-format.yaml"
+      run: bash -c "~/.githooks/scripts/pre-commit/cmake-lint.sh {staged_files}"

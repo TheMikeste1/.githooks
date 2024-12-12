@@ -2,10 +2,10 @@
 prepare-commit-msg:
   commands:
     add-jira-issue:
-      run: ~/.githooks/scripts/prepare-commit-msg/add_jira_issue.bash {0}
+      run: bash -c "~/.githooks/scripts/prepare-commit-msg/add_jira_issue.sh {0}"
     detect-conflict-markers:
       exclude:
         - "*.patch"
         - "*.sln"
-      run: git diff --staged --check {staged_files} > /dev/null
+      run: bash -c "git diff --staged --check {staged_files} > /dev/null"
       fail_text: Detected conflict markers, tabs, or trailing whitespace. Run `git diff --staged --check` and fix the issues.

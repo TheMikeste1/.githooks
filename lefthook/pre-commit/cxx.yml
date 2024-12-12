@@ -4,7 +4,7 @@ cxx:
   commands:
     clang-format:
       glob: '*.{h,c}{pp,}'
-      run: clang-format -style=file --dry-run --Werror {staged_files} || (clang-format -style=file -i {staged_files} && false)
+      run: bash -c "~/.githooks/scripts/pre-commit/clang-format.sh {staged_files}"
     cppcheck:
       glob: '*.{h,c}{pp,}'
-      run: "mkdir -p .cache/cppcheck && cppcheck --enable=warning,performance,portability,information --disable=missingInclude --suppress=unknownMacro --suppress=checkersReport --suppress=normalCheckLevelMaxBranches --suppress=unmatchedSuppression --language=c++ --cppcheck-build-dir=.cache/cppcheck --error-exitcode=1 --inline-suppr --force --library=googletest -j 8 {staged_files}"
+      run: bash -c "~/.githooks/scripts/pre-commit/cppcheck.sh {staged_files}"
