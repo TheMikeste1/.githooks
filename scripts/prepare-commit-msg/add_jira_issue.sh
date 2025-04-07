@@ -23,6 +23,12 @@ done
 
 COMMIT_FILE=$1
 COMMIT_MSG=$(cat "$1")
+
+if [[ "$COMMIT_MSG" == "fixup"* ]]; then
+  echo "Fixup commit; not checking issue number"
+  exit 0
+fi
+
 JIRA_ID_REGEX="[A-Z0-9]{1,10}-[A-Z0-9]+"
 JIRA_ID_IN_CURRENT_BRANCH_NAME=$(echo "$CURRENT_BRANCH" | { grep -Eo "$JIRA_ID_REGEX" | tr '\n' ' ' | sed 's/ *$//' || true; })
 JIRA_ID_IN_COMMIT_MESSAGE=$(echo "$COMMIT_MSG" | head -1 | { grep -Eo "$JIRA_ID_REGEX" | tr '\n' ' ' | sed 's/ *$//' || true; })
