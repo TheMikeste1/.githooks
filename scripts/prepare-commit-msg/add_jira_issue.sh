@@ -16,9 +16,15 @@ if [ "$#" -lt 1 ]; then
 fi
 
 readonly current_branch="$(git branch --show-current)"
+if [[ "$current_branch" == '' ]]; then
+  # We're not currently on a branch; nothing to do
+  exit 0
+fi
+
 declare -ra BRANCHES_TO_SKIP="${BRANCHES_TO_SKIP:=("master" "main" "develop" "test")}"
 for branch in "${BRANCHES_TO_SKIP[@]}"; do
-    if [[ "$branch" = "$current_branch" ]]; then
+    echo "Testing $branch == $current_branch"
+    if [[ "$branch" == "$current_branch" ]]; then
         echo "Branch \`$branch\` is on ignored branches list; not checking issue number"
         exit 0
     fi
@@ -42,13 +48,13 @@ if [[ "$id_in_msg" == "" ]] && [[ "$id_in_branch" == "" ]]; then
     exit 0
 fi
 
-if [[ "$id_in_branch" != "" ]]; then
-    echo "JIRA ID '$id_in_branch', matched in current branch name, prepended to commit message."
-    echo "$id_in_branch $commit_msg" > "$commit_file"
-fi
-
-if [[ "$id_in_msg" != "$id_in_branch" ]]; then
+if [[ "$id_in_msg" == "$id_in_branch" ]]; then
+    echo "JIRA ID '$id_in_branch' already found in commit message."
+elif [[ "$id_in_msg" != "" ]]; then
     echo "WARNING: Commit message JIRA_TASK_ID='$id_in_msg' is not equal to current branch JIRA_TASK_ID='$id_in_branch'" >&2
-    printf "\tCommit message will contain both\n" >&2
+    echo "         Commit message will contain both" >&2
+    echo "$id_in_branch $commit_msg" > "$commit_file"
+else
+    echo "JIRA ID '$id_in_branch', matched in current branch name, prepended to commit message."
     echo "$id_in_branch $commit_msg" > "$commit_file"
 fi
