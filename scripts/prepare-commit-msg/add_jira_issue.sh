@@ -15,15 +15,23 @@ if [ "$#" -lt 1 ]; then
     exit 1
 fi
 
+# Skip merge commits
+case "$2" in
+    merge)   exit 0 ;;                 # Skip merge commits
+    squash)  exit 0 ;;                 # Skip squashes
+    commit)  ;;                        # --amend or rebase -i
+    message|template) ;;               # -m or -t
+    *) ;;                              # Normal edit
+esac
+
 readonly current_branch="$(git branch --show-current)"
 if [[ "$current_branch" == '' ]]; then
-  # We're not currently on a branch; nothing to do
-  exit 0
+    # We're not currently on a branch; nothing to do
+    exit 0
 fi
 
 declare -ra BRANCHES_TO_SKIP="${BRANCHES_TO_SKIP:=("master" "main" "develop" "test")}"
 for branch in "${BRANCHES_TO_SKIP[@]}"; do
-    echo "Testing $branch == $current_branch"
     if [[ "$branch" == "$current_branch" ]]; then
         echo "Branch \`$branch\` is on ignored branches list; not checking issue number"
         exit 0
