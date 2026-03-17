@@ -1,5 +1,6 @@
 ---
 rust:
+  skip: [merge]
   parallel: false
   commands:
     rustfmt:

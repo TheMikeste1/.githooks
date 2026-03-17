@@ -1,5 +1,6 @@
 ---
 gdscript:
+  skip: [merge]
   parallel: true
   commands:
     gdformat:

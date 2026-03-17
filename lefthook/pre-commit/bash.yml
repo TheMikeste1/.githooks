@@ -1,5 +1,6 @@
 ---
 bash:
+  skip: [merge]
   parallel: false
   commands:
     shellcheck:

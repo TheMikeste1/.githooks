@@ -1,5 +1,6 @@
 ---
 cmake:
+  skip: [merge]
   parallel: false
   commands:
     cmake-format:

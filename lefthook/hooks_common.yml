@@ -1,5 +1,6 @@
 ---
 prepare-commit-msg:
+  skip: [merge]
   commands:
     add-jira-issue:
       run: bash -c "~/.githooks/scripts/prepare-commit-msg/add_jira_issue.sh {0}"

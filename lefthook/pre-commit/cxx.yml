@@ -1,5 +1,6 @@
 ---
 cxx:
+  skip: [merge]
   parallel: true
   commands:
     clang-format:

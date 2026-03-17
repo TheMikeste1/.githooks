@@ -3,7 +3,7 @@ tab_size: 2
 use_tabchars: false
 separate_ctrl_name_with_space: false
 separate_fn_name_with_space: false
-dangle_parens:  false
+dangle_parens: false
 max_prefix_chars: 2
 max_lines_hwrap: 2
 line_ending: unix
